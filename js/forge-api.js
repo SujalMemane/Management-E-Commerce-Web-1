@@ -581,6 +581,60 @@ export const analyticsService = {
 };
 
 // ─────────────────────────────────────────────
+// SUPPORT TICKETS
+// ─────────────────────────────────────────────
+export const supportService = {
+  async getAll({ search = '', page = 1, pageSize = 10, status = '' } = {}) {
+    // Fetch all sequentially ordered locally to bypass cloud composite index requirements
+    const snapshot = await getDocs(query(collection(db, 'support'), orderBy('createdAt', 'desc')));
+    let tickets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    if (status && status !== 'all') {
+      tickets = tickets.filter(t => t.status === status);
+    }
+    
+    if (search) {
+      const s = search.toLowerCase();
+      tickets = tickets.filter(t => 
+        (t.customerName?.toLowerCase() || '').includes(s) || 
+        (t.subject?.toLowerCase() || '').includes(s) ||
+        (t.email?.toLowerCase() || '').includes(s)
+      );
+    }
+
+    const total = tickets.length;
+    return {
+      data: tickets.slice((page - 1) * pageSize, page * pageSize),
+      total, page, pageSize, totalPages: Math.ceil(total / pageSize) || 1
+    };
+  },
+
+  async getById(id) {
+    const snap = await getDoc(doc(db, 'support', id));
+    return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+  },
+
+  async updateStatus(id, newStatus) {
+    return updateDoc(doc(db, 'support', id), { status: newStatus, updatedAt: serverTimestamp() });
+  },
+
+  async sendReply(id, replyText) {
+    // We simulate sending a reply by pushing to an array and changing status to 'resolved'
+    const snap = await getDoc(doc(db, 'support', id));
+    if (!snap.exists()) throw new Error('Ticket not found');
+    const existing = snap.data();
+    const replies = existing.replies || [];
+    replies.push({ text: replyText, sentAt: new Date() });
+
+    return updateDoc(doc(db, 'support', id), { 
+      replies, 
+      status: 'resolved', 
+      updatedAt: serverTimestamp() 
+    });
+  }
+};
+
+// ─────────────────────────────────────────────
 // ABANDONED CARTS (Cart Service)
 // ─────────────────────────────────────────────
 export {

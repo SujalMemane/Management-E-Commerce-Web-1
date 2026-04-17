@@ -1,4 +1,4 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,7 +52,7 @@
         <a href="products.html" class="nav-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all bg-brand-500/10 text-brand-400">
             <i class="fa-solid fa-box w-5 text-center"></i>
             <span class="sidebar-text">Products</span>
-            <span id="sidebar-product-count" class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">â€”</span>
+            <span id="sidebar-product-count" class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">—</span>
         </a>
 
         <!-- CATEGORIES -->
@@ -94,10 +94,10 @@
             <span class="sidebar-text">Promotions</span>
         </a>
 
-        <!-- ABANDONED CARTS -->
-        <a href="abandoned-carts.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
-            <i class="fa-solid fa-cart-arrow-down w-5 text-center"></i>
-            <span class="sidebar-text">Abandoned Carts</span>
+        <!-- SUPPORT TICKETS -->
+        <a href="support.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
+            <i class="fa-solid fa-headset w-5 text-center"></i>
+            <span class="sidebar-text">Support Tickets</span>
         </a>
 
         <p class="px-3 mt-6 mb-2 text-[11px] font-semibold uppercase tracking-wider text-gray-500 sidebar-text">System</p>
@@ -116,10 +116,10 @@
     </nav>
     <div class="border-t border-sidebar-border p-4 flex-shrink-0">
         <div class="flex items-center gap-3">
-            <div data-user-initials class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">â€”</div>
+            <div data-user-initials class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">—</div>
             <div class="sidebar-text min-w-0">
                 <p data-user-name class="text-white text-sm font-semibold truncate">Loading...</p>
-                <p data-user-email class="text-gray-500 text-xs truncate">â€”</p>
+                <p data-user-email class="text-gray-500 text-xs truncate">—</p>
             </div>
             <a id="logoutBtn" href="#" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -145,10 +145,10 @@
             </button>
             <div class="w-px h-8 bg-gray-200 mx-1 hidden sm:block"></div>
             <button class="flex items-center gap-2.5 pl-2 pr-3 py-1.5 hover:bg-gray-100 rounded-xl transition-colors">
-                <div data-user-initials class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold text-xs">â€”</div>
+                <div data-user-initials class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold text-xs">—</div>
                 <div class="hidden sm:block text-left">
                     <p data-user-name class="text-sm font-semibold text-gray-800 leading-tight">Loading...</p>
-                    <p data-user-role class="text-[11px] text-gray-400">â€”</p>
+                    <p data-user-role class="text-[11px] text-gray-400">—</p>
                 </div>
                 <i class="fa-solid fa-chevron-down text-gray-400 text-xs hidden sm:block"></i>
             </button>
@@ -173,7 +173,7 @@
         <div class="flex-1 min-w-[300px]">
             <input id="products-search" type="text" placeholder="Search products by SKU, name..." class="forge-input">
         </div>
-        <span class="text-xs text-gray-500"><span id="products-count">â€”</span> products total</span>
+        <span class="text-xs text-gray-500"><span id="products-count">—</span> products total</span>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse min-w-[700px]">
@@ -197,3 +197,4 @@
 <script type="module" src="../js/pages/products.js"></script>
 </body>
 </html>
+

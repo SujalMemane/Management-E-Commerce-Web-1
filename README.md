@@ -27,6 +27,7 @@ It includes authentication, Firestore-backed CRUD modules, dashboard stats, and 
 - Reviews: moderation (approve/reject/delete)
 - Promotions: coupon CRUD with validation
 - Staff: list/create/edit/delete
+- Support Tickets: In-app mini-CRM for tracking customer inquiries and resolving issues natively
 - Settings: profile + notification preferences + internal security access updates
 - Seed utility page to populate demo data quickly
 

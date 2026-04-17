@@ -52,7 +52,7 @@
         <a href="products.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
             <i class="fa-solid fa-box w-5 text-center"></i>
             <span class="sidebar-text">Products</span>
-            <span class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">24</span>
+            <span id="sidebar-product-count" class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">—</span>
         </a>
 
         <!-- CATEGORIES -->
@@ -68,7 +68,7 @@
         </a>
 
         <!-- ORDERS -->
-        <a href="orders.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
+        <a href="orders.html" class="nav-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all bg-brand-500/10 text-brand-400">
             <i class="fa-solid fa-bag-shopping w-5 text-center"></i>
             <span class="sidebar-text">Orders</span>
             <span class="sidebar-text ml-auto w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
@@ -109,7 +109,7 @@
         </a>
 
         <!-- SETTINGS -->
-        <a href="settings.html" class="nav-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all bg-brand-500/10 text-brand-400">
+        <a href="settings.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
             <i class="fa-solid fa-gear w-5 text-center"></i>
             <span class="sidebar-text">Settings</span>
         </a>
@@ -134,9 +134,8 @@
             <button class="lg:hidden p-2 hover:bg-gray-100 rounded-xl transition-colors">
                 <i class="fa-solid fa-bars text-gray-600"></i>
             </button>
-            <div class="hidden sm:flex items-center bg-gray-100 rounded-xl px-4 py-2.5 w-72">
-                <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2 flex-shrink-0"></i>
-                <input type="text" placeholder="Search anything..." class="bg-transparent border-none outline-none text-sm w-full placeholder-gray-400">
+            <div class="hidden sm:flex items-center">
+                <input type="text" placeholder="Search anything..." class="forge-search">
             </div>
         </div>
         <div class="flex items-center gap-2">
@@ -159,109 +158,81 @@
         <div class="p-4 sm:p-6 lg:p-8 flex-1">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
     <div>
-        <h2 class="text-2xl font-bold text-gray-900">Settings</h2>
-        <p class="text-gray-500 mt-1">Manage your platform preferences.</p>
+        <h2 class="text-2xl font-bold text-gray-900">Support Tickets</h2>
+        <p class="text-gray-500 mt-1">Manage customer inquiries and ticket resolutions.</p>
     </div>
-    <div class="mt-4 sm:mt-0">
-        <button id="btn-save-settings" class="px-5 py-2.5 bg-brand-500 text-white text-sm font-medium rounded-xl hover:bg-brand-600 transition-colors shadow-sm shadow-brand-500/30">
-            Save Changes
+    <div class="mt-4 sm:mt-0 flex gap-3">
+        <button id="btn-new-ticket" class="px-4 py-2 border border-gray-200 text-gray-700 text-sm font-medium rounded-xl hover:bg-gray-50 transition-colors shadow-sm">
+            <i class="fa-solid fa-plus mr-1.5"></i> New Ticket
         </button>
     </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-    <!-- settings nav left -->
-    <div class="space-y-1">
-        <button class="w-full text-left px-4 py-2.5 bg-white border border-gray-200 rounded-xl font-medium text-sm text-brand-600 shadow-sm"><i class="fa-solid fa-user mr-3 w-4 text-center"></i> Profile</button>
-        <button class="w-full text-left px-4 py-2.5 hover:bg-gray-100 rounded-xl font-medium text-sm text-gray-600 transition-colors"><i class="fa-solid fa-store mr-3 w-4 text-center"></i> Store Details</button>
-        <button class="w-full text-left px-4 py-2.5 hover:bg-gray-100 rounded-xl font-medium text-sm text-gray-600 transition-colors"><i class="fa-solid fa-bell mr-3 w-4 text-center"></i> Notifications</button>
-        <button class="w-full text-left px-4 py-2.5 hover:bg-gray-100 rounded-xl font-medium text-sm text-gray-600 transition-colors"><i class="fa-solid fa-shield-halved mr-3 w-4 text-center"></i> Security</button>
-    </div>
-    
-    <!-- settings form right -->
-    <div class="lg:col-span-3">
-        <div class="bg-white rounded-2xl border border-gray-100 p-6 sm:p-8 shadow-sm">
-            <h3 class="text-lg font-bold text-gray-900 mb-6">Profile Settings</h3>
-            
-            <div class="flex items-center gap-6 mb-8 pb-8 border-b border-gray-100">
-                <div id="settings-avatar" class="w-20 h-20 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-brand-500/30">
-                    —
-                </div>
-                <div>
-                    <button class="px-4 py-2 border border-gray-200 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors mb-2 block">Change Avatar</button>
-                    <p class="text-xs text-gray-500">JPG, GIF or PNG. Max size of 800K</p>
-                </div>
-            </div>
-
-            <form class="space-y-6">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                        <label class="forge-label">First Name</label>
-                        <input id="sf-first" type="text" class="forge-input">
-                    </div>
-                    <div>
-                        <label class="forge-label">Last Name</label>
-                        <input id="sf-last" type="text" class="forge-input">
-                    </div>
-                </div>
-                <div>
-                    <label class="forge-label">Email Address</label>
-                    <input id="sf-email" type="email" class="forge-input">
-                </div>
-                <div class="pt-6 border-t border-gray-100">
-                    <h4 class="font-medium text-gray-900 mb-4">Email Preferences</h4>
-                    <label class="flex items-center gap-3 cursor-pointer mb-4">
-                        <input id="notif-daily-orders" type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-500 focus:ring-brand-500">
-                        <div>
-                            <p class="text-sm font-medium text-gray-800">Daily Order Summary</p>
-                            <p class="text-xs text-gray-500">Get a daily morning email detailing new orders.</p>
-                        </div>
-                    </label>
-                    <label class="flex items-center gap-3 cursor-pointer mb-4">
-                        <input id="notif-low-stock" type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-500 focus:ring-brand-500">
-                        <div>
-                            <p class="text-sm font-medium text-gray-800">Low Stock Alerts</p>
-                            <p class="text-xs text-gray-500">Get notified when a product inventory falls below 5.</p>
-                        </div>
-                    </label>
-                    <label class="flex items-center gap-3 cursor-pointer">
-                        <input id="notif-marketing" type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-500 focus:ring-brand-500">
-                        <div>
-                            <p class="text-sm font-medium text-gray-800">Marketing Updates</p>
-                            <p class="text-xs text-gray-500">Receive tips and updates from ForgeCart.</p>
-                        </div>
-                    </label>
-                </div>
-                
-                <div class="pt-6 border-t border-gray-100">
-                    <h4 class="font-medium text-gray-900 mb-4">Change Password</h4>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="forge-label">Current Password</label>
-                            <input id="sf-current-pw" type="password" class="forge-input" placeholder="Enter current password">
-                        </div>
-                        <div>
-                            <label class="forge-label">New Password</label>
-                            <input id="sf-new-pw" type="password" class="forge-input" placeholder="Enter new password (min 8 characters)">
-                        </div>
-                        <div>
-                            <label class="forge-label">Confirm New Password</label>
-                            <input id="sf-confirm-pw" type="password" class="forge-input" placeholder="Confirm new password">
-                        </div>
-                        <button id="btn-change-password" type="button" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-colors">
-                            Update Password
-                        </button>
-                    </div>
-                </div>
-            </form>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-clock-rotate-left text-blue-500 text-xl"></i>
+        </div>
+        <div>
+            <p class="text-gray-500 text-sm">Pending Orders</p>
+            <p id="stat-pending" class="text-2xl font-bold text-gray-900">�</p>
         </div>
     </div>
+    <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4">
+        <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-box-open text-amber-500 text-xl"></i>
+        </div>
+        <div>
+            <p class="text-gray-500 text-sm">Processing</p>
+            <p id="stat-processing" class="text-2xl font-bold text-gray-900">�</p>
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4">
+        <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-circle-check text-emerald-500 text-xl"></i>
+        </div>
+        <div>
+            <p class="text-gray-500 text-sm">Completed</p>
+            <p id="stat-completed" class="text-2xl font-bold text-gray-900">�</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+    <div class="p-4 sm:p-5 border-b border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+            <button data-filter-status="" class="px-4 py-1.5 bg-gray-900 text-white rounded-lg text-sm font-medium whitespace-nowrap">All Tickets</button>
+            <button data-filter-status="open" class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 whitespace-nowrap">Open</button>
+            <button data-filter-status="in-progress" class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 whitespace-nowrap">In Progress</button>
+            <button data-filter-status="resolved" class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 whitespace-nowrap">Resolved</button>
+        </div>
+        <div class="w-full max-w-[250px]">
+            <input id="support-search" type="text" placeholder="Search subject or user..." class="forge-input" style="padding: 0.5rem 1rem;">
+        </div>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[800px]">
+            <thead>
+                <tr class="bg-gray-50/50 text-gray-500 text-sm border-b border-gray-100">
+                    <th class="px-6 py-4 font-medium">Ticket ID</th>
+                    <th class="px-6 py-4 font-medium">Date</th>
+                    <th class="px-6 py-4 font-medium">Customer</th>
+                    <th class="px-6 py-4 font-medium">Subject & Priority</th>
+                    <th class="px-6 py-4 font-medium">Status</th>
+                    <th class="px-6 py-4 font-medium text-right">Action</th>
+                </tr>
+            </thead>
+            <tbody id="support-tbody" class="text-sm"></tbody>
+        </table>
+    </div><div id="support-pagination" class="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500"></div>
 </div>
         </div>
     </main>
 
-<script type="module" src="../js/pages/settings.js"></script>
+<script type="module" src="../js/pages/support.js"></script>
 </body>
 </html>
+
+
 
 
