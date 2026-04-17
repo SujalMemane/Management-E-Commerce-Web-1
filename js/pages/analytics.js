@@ -2,8 +2,10 @@
  * ForgeAdmin — Analytics Page
  */
 import { auth } from '../firebase-config.js';
-import { requireAuth, populateUserUI, fmt, showToast } from '../ui-utils.js';
-import { analyticsService, settingsService } from '../forge-api.js';
+import { requireAuth, populateUserUI, populateSidebarStats, fmt, showToast } from '../ui-utils.js';
+import { analyticsService, settingsService, productService } from '../forge-api.js';
+
+populateSidebarStats(productService);
 import { signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const user = await requireAuth(auth, '../index.html');

@@ -2,8 +2,10 @@
  * ForgeAdmin — Settings Page
  */
 import { auth } from '../firebase-config.js';
-import { requireAuth, populateUserUI, fmt, showToast, setLoading } from '../ui-utils.js';
-import { settingsService } from '../forge-api.js';
+import { requireAuth, populateUserUI, populateSidebarStats, fmt, showToast, setLoading } from '../ui-utils.js';
+import { settingsService, productService } from '../forge-api.js';
+
+populateSidebarStats(productService);
 import {
   signOut, updateEmail, updatePassword, EmailAuthProvider, reauthenticateWithCredential
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";

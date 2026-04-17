@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -46,7 +46,7 @@
         <a href="products.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
             <i class="fa-solid fa-box w-5 text-center"></i>
             <span class="sidebar-text">Products</span>
-            <span class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">24</span>
+            <span id="sidebar-product-count" class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">—</span>
         </a>
         <a href="categories.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
             <i class="fa-solid fa-tags w-5 text-center"></i>
@@ -91,7 +91,7 @@
                 <p data-user-name class="text-white text-sm font-semibold truncate">Loading...</p>
                 <p data-user-email class="text-gray-500 text-xs truncate">—</p>
             </div>
-            <a href="../index.html" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
+            <a id="logoutBtn" href="#" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
         </div>
@@ -123,41 +123,41 @@
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Conversion Rate</p>
                     <div class="flex items-end justify-between">
-                        <h3 class="text-2xl font-bold text-gray-900">3.48%</h3>
+                        <h3 id="metric-conversion" class="text-2xl font-bold text-gray-900">3.48%</h3>
                         <span class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>12%</span>
                     </div>
                     <div class="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-brand-500 rounded-full" style="width: 65%"></div>
+                        <div id="bar-conversion" class="h-full bg-brand-500 rounded-full" style="width: 65%"></div>
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Average Order Value</p>
                     <div class="flex items-end justify-between">
-                        <h3 class="text-2xl font-bold text-gray-900">$128.50</h3>
+                        <h3 id="metric-aov" class="text-2xl font-bold text-gray-900">$128.50</h3>
                         <span class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>8%</span>
                     </div>
                     <div class="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-blue-500 rounded-full" style="width: 45%"></div>
+                        <div id="bar-aov" class="h-full bg-blue-500 rounded-full" style="width: 45%"></div>
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Bounce Rate</p>
                     <div class="flex items-end justify-between">
-                        <h3 class="text-2xl font-bold text-gray-900">42.1%</h3>
+                        <h3 id="metric-bounce" class="text-2xl font-bold text-gray-900">42.1%</h3>
                         <span class="text-red-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-down mr-1"></i>5%</span>
                     </div>
                     <div class="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-red-500 rounded-full" style="width: 42%"></div>
+                        <div id="bar-bounce" class="h-full bg-red-500 rounded-full" style="width: 42%"></div>
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Sessions</p>
                     <div class="flex items-end justify-between">
-                        <h3 class="text-2xl font-bold text-gray-900">12,842</h3>
+                        <h3 id="metric-sessions" class="text-2xl font-bold text-gray-900">12,842</h3>
                         <span class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>24%</span>
                     </div>
                     <div class="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald-500 rounded-full" style="width: 78%"></div>
+                        <div id="bar-sessions" class="h-full bg-emerald-500 rounded-full" style="width: 78%"></div>
                     </div>
                 </div>
             </div>
@@ -165,7 +165,7 @@
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <h3 class="font-bold text-gray-900 mb-6">Traffic Sources</h3>
-                    <div class="space-y-4">
+                    <div id="traffic-sources" class="space-y-4">
                         <div class="flex items-center gap-4">
                             <span class="text-sm font-medium text-gray-600 w-24">Direct</span>
                             <div class="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -198,7 +198,7 @@
                 </div>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <h3 class="font-bold text-gray-900 mb-6">Device Breakdown</h3>
-                    <div class="flex items-center justify-around h-48">
+                    <div id="device-breakdown" class="flex items-center justify-around h-48">
                         <div class="text-center">
                             <div class="w-24 h-24 rounded-full border-8 border-brand-500 border-t-transparent flex items-center justify-center mb-2">
                                 <span class="text-lg font-bold">58%</span>
@@ -226,4 +226,5 @@
 <script type="module" src="../js/pages/analytics.js"></script>
 </body>
 </html>
+
 

@@ -2,9 +2,11 @@
  * ForgeAdmin — Orders Page
  */
 import { auth } from '../firebase-config.js';
-import { requireAuth, populateUserUI, fmt, showToast, openModal,
+import { requireAuth, populateUserUI, populateSidebarStats, fmt, showToast, openModal,
          setLoading, skeletonRows, renderPagination } from '../ui-utils.js';
-import { orderService, settingsService } from '../forge-api.js';
+import { orderService, settingsService, productService } from '../forge-api.js';
+
+populateSidebarStats(productService);
 import { signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const esc = fmt.escapeHtml;

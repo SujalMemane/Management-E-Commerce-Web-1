@@ -286,3 +286,16 @@ export function populateUserUI(user, profileData = null) {
   document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = email);
   document.querySelectorAll('[data-user-role]').forEach(el => el.textContent = role);
 }
+
+// ═══════════════════════════════════════════════════════════════
+// POPULATE SIDEBAR PRODUCT COUNT
+// ═══════════════════════════════════════════════════════════════
+export async function populateSidebarStats(productService) {
+  try {
+    const count = await productService.getCount();
+    const el = document.getElementById('sidebar-product-count');
+    if (el) el.textContent = count;
+  } catch (e) {
+    console.warn('Could not load sidebar product count');
+  }
+}

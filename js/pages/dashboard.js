@@ -51,6 +51,10 @@ async function loadDashboard() {
     setStatCard('orders',    fmt.number(stats.orders.total),       stats.orders.change,    stats.orders.trend);
     setStatCard('customers', fmt.number(stats.customers.total),    stats.customers.change, stats.customers.trend);
     setStatCard('products',  fmt.number(stats.products.total),     stats.products.change,  stats.products.trend);
+    
+    // Update sidebar product count badge
+    const sidebarCount = document.getElementById('sidebar-product-count');
+    if (sidebarCount) sidebarCount.textContent = stats.products.total;
   } catch (err) {
     console.error('[Dashboard] Failed to load stats:', err);
     showToast('Could not load dashboard stats', 'error');

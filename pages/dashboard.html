@@ -63,7 +63,7 @@
                 <a href="products.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
                     <i class="fa-solid fa-box w-5 text-center"></i>
                     <span class="sidebar-text">Products</span>
-                    <span class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">24</span>
+                    <span id="sidebar-product-count" class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">—</span>
                 </a>
 
                 <!-- CATEGORIES -->
@@ -180,8 +180,8 @@
             <div class="w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                 <i class="fa-solid fa-dollar-sign text-brand-500 text-xl"></i>
             </div>
-            <span class="flex items-center gap-1 text-emerald-600 text-sm font-semibold bg-emerald-50 px-2.5 py-1 rounded-lg">
-                <i class="fa-solid fa-arrow-trend-up text-xs"></i> 12.5%
+            <span class="flex items-center gap-1 text-sm font-semibold px-2.5 py-1 rounded-lg text-emerald-600 bg-emerald-50">
+                <i data-trend="revenue" class="fa-solid fa-arrow-trend-up text-xs"></i> <span data-change="revenue">0</span>%
             </span>
         </div>
         <p class="text-gray-500 text-sm mb-1">Total Revenue</p>
@@ -192,8 +192,8 @@
             <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                 <i class="fa-solid fa-cart-shopping text-blue-500 text-xl"></i>
             </div>
-            <span class="flex items-center gap-1 text-emerald-600 text-sm font-semibold bg-emerald-50 px-2.5 py-1 rounded-lg">
-                <i class="fa-solid fa-arrow-trend-up text-xs"></i> 8.2%
+            <span class="flex items-center gap-1 text-sm font-semibold px-2.5 py-1 rounded-lg text-emerald-600 bg-emerald-50">
+                <i data-trend="orders" class="fa-solid fa-arrow-trend-up text-xs"></i> <span data-change="orders">0</span>%
             </span>
         </div>
         <p class="text-gray-500 text-sm mb-1">Total Orders</p>
@@ -204,8 +204,8 @@
             <div class="w-12 h-12 bg-violet-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                 <i class="fa-solid fa-users text-violet-500 text-xl"></i>
             </div>
-            <span class="flex items-center gap-1 text-emerald-600 text-sm font-semibold bg-emerald-50 px-2.5 py-1 rounded-lg">
-                <i class="fa-solid fa-arrow-trend-up text-xs"></i> 5.1%
+            <span class="flex items-center gap-1 text-sm font-semibold px-2.5 py-1 rounded-lg text-emerald-600 bg-emerald-50">
+                <i data-trend="customers" class="fa-solid fa-arrow-trend-up text-xs"></i> <span data-change="customers">0</span>%
             </span>
         </div>
         <p class="text-gray-500 text-sm mb-1">Total Customers</p>
@@ -216,8 +216,8 @@
             <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                 <i class="fa-solid fa-box-open text-emerald-500 text-xl"></i>
             </div>
-            <span class="flex items-center gap-1 text-red-500 text-sm font-semibold bg-red-50 px-2.5 py-1 rounded-lg">
-                <i class="fa-solid fa-arrow-trend-down text-xs"></i> 2.3%
+            <span class="flex items-center gap-1 text-sm font-semibold px-2.5 py-1 rounded-lg text-emerald-600 bg-emerald-50">
+                <i data-trend="products" class="fa-solid fa-arrow-trend-up text-xs"></i> <span data-change="products">0</span>%
             </span>
         </div>
         <p class="text-gray-500 text-sm mb-1">Total Products</p>

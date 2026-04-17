@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,7 +52,7 @@
         <a href="products.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
             <i class="fa-solid fa-box w-5 text-center"></i>
             <span class="sidebar-text">Products</span>
-            <span class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">24</span>
+            <span id="sidebar-product-count" class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">—</span>
         </a>
 
         <!-- CATEGORIES -->
@@ -115,7 +115,7 @@
                 <p data-user-name class="text-white text-sm font-semibold truncate">Loading...</p>
                 <p data-user-email class="text-gray-500 text-xs truncate">—</p>
             </div>
-            <a href="../index.html" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
+            <a id="logoutBtn" href="#" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
         </div>
@@ -232,6 +232,29 @@
                     </button>
                 </div>
             </form>
+            
+            <form class="space-y-6 mt-8 pt-8 border-t border-gray-100">
+                <h3 class="text-lg font-bold text-gray-900 mb-6">Security Settings</h3>
+                <div>
+                    <label class="forge-label">Current Password</label>
+                    <input id="sf-current-pw" type="password" class="forge-input" placeholder="Enter current password">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="forge-label">New Password</label>
+                        <input id="sf-new-pw" type="password" class="forge-input" placeholder="New password (min 8 chars)">
+                    </div>
+                    <div>
+                        <label class="forge-label">Confirm New Password</label>
+                        <input id="sf-confirm-pw" type="password" class="forge-input" placeholder="Confirm new password">
+                    </div>
+                </div>
+                <div class="pt-4">
+                    <button id="btn-change-password" type="button" class="px-6 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-colors shadow-sm">
+                        Change Password
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -241,3 +264,4 @@
 <script type="module" src="../js/pages/settings.js"></script>
 </body>
 </html>
+

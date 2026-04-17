@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -46,7 +46,7 @@
         <a href="products.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
             <i class="fa-solid fa-box w-5 text-center"></i>
             <span class="sidebar-text">Products</span>
-            <span class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">24</span>
+            <span id="sidebar-product-count" class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">—</span>
         </a>
         <a href="categories.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
             <i class="fa-solid fa-tags w-5 text-center"></i>
@@ -91,7 +91,7 @@
                 <p data-user-name class="text-white text-sm font-semibold truncate">Loading...</p>
                 <p data-user-email class="text-gray-500 text-xs truncate">—</p>
             </div>
-            <a href="../index.html" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
+            <a id="logoutBtn" href="#" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
         </div>
@@ -107,7 +107,7 @@
                     <h2 class="text-lg font-bold text-gray-900">Promotions</h2>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button class="px-5 py-2.5 bg-brand-500 text-white text-sm font-medium rounded-xl hover:bg-brand-600 transition-colors shadow-sm shadow-brand-500/30">
+                    <button id="btn-create-coupon" class="px-5 py-2.5 bg-brand-500 text-white text-sm font-medium rounded-xl hover:bg-brand-600 transition-colors shadow-sm shadow-brand-500/30">
                         <i class="fa-solid fa-plus mr-2"></i> Create Coupon
                     </button>
                 </div>
@@ -118,21 +118,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <div class="bg-gradient-to-br from-brand-500 to-brand-700 p-6 rounded-2xl text-white shadow-lg shadow-brand-500/20">
                     <p class="text-brand-100 text-sm mb-1">Active Coupons</p>
-                    <h3 class="text-3xl font-bold">12</h3>
+                    <h3 id="prom-active" class="text-3xl font-bold">12</h3>
                     <div class="mt-4 flex items-center gap-2 text-brand-100 text-xs font-medium">
                         <i class="fa-solid fa-circle-check"></i> 4 starting today
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Coupon Usage</p>
-                    <h3 class="text-3xl font-bold text-gray-900">842</h3>
+                    <h3 id="prom-usage" class="text-3xl font-bold text-gray-900">842</h3>
                     <div class="mt-4 flex items-center gap-2 text-emerald-500 text-xs font-bold">
                         <i class="fa-solid fa-arrow-trend-up"></i> 18% Increase
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <p class="text-gray-500 text-sm mb-1">Total Savings</p>
-                    <h3 class="text-3xl font-bold text-gray-900">$4,250</h3>
+                    <h3 id="prom-savings" class="text-3xl font-bold text-gray-900">$4,250</h3>
                     <div class="mt-4 flex items-center gap-2 text-gray-400 text-xs font-medium">
                         Last 30 days
                     </div>
@@ -179,5 +179,6 @@
 <script type="module" src="../js/pages/promotions.js"></script>
 </body>
 </html>
+
 
 

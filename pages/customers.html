@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,7 +52,7 @@
         <a href="products.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-sidebar-hover">
             <i class="fa-solid fa-box w-5 text-center"></i>
             <span class="sidebar-text">Products</span>
-            <span class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">24</span>
+            <span id="sidebar-product-count" class="sidebar-text ml-auto bg-brand-500/20 text-brand-400 text-[11px] font-semibold px-2 py-0.5 rounded-full">—</span>
         </a>
 
         <!-- CATEGORIES -->
@@ -115,7 +115,7 @@
                 <p data-user-name class="text-white text-sm font-semibold truncate">Loading...</p>
                 <p data-user-email class="text-gray-500 text-xs truncate">—</p>
             </div>
-            <a href="../index.html" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
+            <a id="logoutBtn" href="#" class="sidebar-text ml-auto text-gray-500 hover:text-red-400 transition-colors" title="Logout">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
         </div>
@@ -129,7 +129,7 @@
                 <i class="fa-solid fa-bars text-gray-600"></i>
             </button>
             <div class="hidden sm:flex items-center">
-                <input type="text" placeholder="Search anything..." class="forge-search">
+                <input id="customers-search" type="text" placeholder="Search anything..." class="forge-search">
             </div>
         </div>
         <div class="flex items-center gap-2">
@@ -156,7 +156,7 @@
         <p class="text-gray-500 mt-1">Manage your customer relationships.</p>
     </div>
     <div class="mt-4 sm:mt-0">
-        <button class="px-5 py-2.5 bg-brand-500 text-white text-sm font-medium rounded-xl hover:bg-brand-600 transition-colors shadow-sm shadow-brand-500/30">
+        <button id="btn-add-customer" class="px-5 py-2.5 bg-brand-500 text-white text-sm font-medium rounded-xl hover:bg-brand-600 transition-colors shadow-sm shadow-brand-500/30">
             <i class="fa-solid fa-user-plus mr-2"></i> Add Customer
         </button>
     </div>
@@ -274,10 +274,12 @@
         </div>
     </div>
 </div>
+    <div id="customers-pagination" class="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500"></div>
         </div>
     </main>
 
 <script type="module" src="../js/pages/customers.js"></script>
 </body>
 </html>
+
 

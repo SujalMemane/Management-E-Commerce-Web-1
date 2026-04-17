@@ -2,8 +2,10 @@
  * ForgeAdmin — Reviews Page
  */
 import { auth } from '../firebase-config.js';
-import { requireAuth, populateUserUI, fmt, showToast, confirmDelete } from '../ui-utils.js';
-import { reviewService, settingsService } from '../forge-api.js';
+import { requireAuth, populateUserUI, populateSidebarStats, fmt, showToast, confirmDelete } from '../ui-utils.js';
+import { reviewService, settingsService, productService } from '../forge-api.js';
+
+populateSidebarStats(productService);
 import { signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const esc = fmt.escapeHtml;
