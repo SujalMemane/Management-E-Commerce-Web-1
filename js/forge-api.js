@@ -565,3 +565,13 @@ export const analyticsService = {
     };
   }
 };
+
+// ─────────────────────────────────────────────
+// ABANDONED CARTS (Cart Service)
+// ─────────────────────────────────────────────
+export {
+  saveCart, getCart, clearCart, markCartConverted,
+  getAbandonedCarts, getAllCarts, getAbandonedCartStats,
+  markRecoveryAttempt, markCartRecovered,
+  generateRecoveryCouponCode, generateRecoveryEmail
+} from './cart-service.js';
