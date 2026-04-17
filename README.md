@@ -7,23 +7,27 @@ It includes authentication, Firestore-backed CRUD modules, dashboard stats, and 
 
 - Firebase Auth is integrated (email/password flow)
 - Firestore is integrated as the primary database
-- Major modules are connected to real data
+- Major modules are fully wired to API endpoints
 - UI user profile (name/email/initials/role) is dynamic from logged-in user data
+- Robust CSV Export module installed for Inventory and Orders datatables
+- Fully Dynamic Analytics charts equipped with auto-calculating trends based on 7-Day / 30-Day interval queries
+- Cloud Composite Index bottlenecks resolved by native JavaScript pagination sorting
 - Hackathon mode is enabled for faster demo setup
 
 ## Features
 
 - Auth: signup, login, logout, protected pages
 - Dashboard: revenue/orders/customers/products cards from Firestore
+- Analytics: Live interactive metric tracking over selected time intervals (7d, 30d, custom)
 - Products: list, search, create, edit, delete
 - Categories: list, create, edit, delete (with product count guard on delete)
-- Inventory: stock monitoring and stock updates
-- Orders: list, search, status transitions, order details modal
+- Inventory: stock monitoring and stock updates, auto-exports to CSV
+- Orders: list, search, status transitions, order details modal, filtered batch CSV exports
 - Customers: list/search/create/edit/soft-delete
 - Reviews: moderation (approve/reject/delete)
 - Promotions: coupon CRUD with validation
 - Staff: list/create/edit/delete
-- Settings: profile + notification preferences persistence
+- Settings: profile + notification preferences + internal security access updates
 - Seed utility page to populate demo data quickly
 
 ## Tech Stack

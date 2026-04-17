@@ -3,7 +3,7 @@
  */
 import { auth } from '../firebase-config.js';
 import { requireAuth, populateUserUI, populateSidebarStats, fmt, showToast, openModal,
-         setLoading, skeletonRows } from '../ui-utils.js';
+         setLoading, skeletonRows, exportToCSV } from '../ui-utils.js';
 import { inventoryService, settingsService, productService } from '../forge-api.js';
 
 populateSidebarStats(productService);
@@ -56,6 +56,8 @@ function inventoryRow(item) {
   </tr>`;
 }
 
+let currentInventory = [];
+
 async function loadInventory() {
   const tbody = document.getElementById('inventory-tbody');
   if (!tbody) return;
@@ -63,6 +65,7 @@ async function loadInventory() {
 
   try {
     const items = await inventoryService.getAll();
+    currentInventory = items;
     const lowCount = items.filter(i => i.stock > 0 && i.stock <= 10).length;
     const el = document.getElementById('low-stock-count');
     if (el) el.textContent = `${lowCount} Low Stock Item${lowCount !== 1 ? 's' : ''}`;
@@ -125,6 +128,20 @@ document.getElementById('btn-restock')?.addEventListener('click', () => {
     saveText: 'Got it',
     onSave: (close) => close()
   });
+});
+
+document.getElementById('btn-export-csv')?.addEventListener('click', () => {
+  if (!currentInventory || currentInventory.length === 0) {
+    return showToast('No data to export', 'warning');
+  }
+  const data = currentInventory.map(item => ({
+    SKU: item.sku || 'N/A',
+    Product: item.name,
+    Category: item.category || 'N/A',
+    Price: item.price || 0,
+    StockLevel: item.stock || 0
+  }));
+  exportToCSV(data, 'InventoryList');
 });
 
 loadInventory();

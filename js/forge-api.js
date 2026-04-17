@@ -155,10 +155,13 @@ const STATUS_TRANSITIONS = {
 export const orderService = {
   async getAll({ status = '', search = '', page = 1, pageSize = 10 } = {}) {
     const constraints = [orderBy('orderedAt', 'desc')];
-    if (status && status !== 'all') constraints.unshift(where('status', '==', status));
 
     const snap = await getDocs(query(collection(db, 'orders'), ...constraints));
     let orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    if (status && status !== 'all') {
+      orders = orders.filter(o => o.status === status);
+    }
 
     if (search) {
       const s = search.toLowerCase();
@@ -496,9 +499,15 @@ export const dashboardService = {
 // ANALYTICS
 // ─────────────────────────────────────────────
 export const analyticsService = {
-  async getOverview() {
+  async getOverview(days = 30) {
+    let ordersQuery = collection(db, 'orders');
+    if (days && days !== 'all') {
+      const d = new Date(); d.setDate(d.getDate() - parseInt(days));
+      ordersQuery = query(collection(db, 'orders'), where('orderedAt', '>=', Timestamp.fromDate(d)));
+    }
+    
     const [ordersSnap, customersSnap, productsSnap] = await Promise.all([
-      getDocs(collection(db, 'orders')),
+      getDocs(ordersQuery),
       getCountFromServer(collection(db, 'customers')),
       getCountFromServer(collection(db, 'products'))
     ]);
@@ -533,7 +542,7 @@ export const analyticsService = {
     };
   },
 
-  async getTrafficSources() {
+  async getTrafficSources(days = 30) {
     // Calculate based on order sources if available, otherwise estimate from customer count
     const custSnap = await getCountFromServer(collection(db, 'customers'));
     const count = custSnap.data().count || 1;
@@ -547,9 +556,14 @@ export const analyticsService = {
     };
   },
 
-  async getDeviceBreakdown() {
+  async getDeviceBreakdown(days = 30) {
     // Realistic device distribution based on e-commerce industry averages
-    const ordersSnap = await getDocs(collection(db, 'orders'));
+    let ordersQuery = collection(db, 'orders');
+    if (days && days !== 'all') {
+      const d = new Date(); d.setDate(d.getDate() - parseInt(days));
+      ordersQuery = query(collection(db, 'orders'), where('orderedAt', '>=', Timestamp.fromDate(d)));
+    }
+    const ordersSnap = await getDocs(ordersQuery);
     const orderCount = ordersSnap.size;
     
     // Mobile-first trend: more orders = higher mobile adoption

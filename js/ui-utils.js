@@ -299,3 +299,44 @@ export async function populateSidebarStats(productService) {
     console.warn('Could not load sidebar product count');
   }
 }
+
+// ═══════════════════════════════════════════════════════════════
+// EXPORT TO CSV
+// ═══════════════════════════════════════════════════════════════
+export function exportToCSV(data, filename) {
+  if (!data || !data.length) {
+    showToast('No data to export', 'error');
+    return;
+  }
+  
+  // Get all unique keys for headers
+  const headers = Array.from(new Set(data.reduce((acc, row) => [...acc, ...Object.keys(row)], [])));
+  
+  // Format rows
+  const csvRows = [
+    headers.join(','),
+    ...data.map(row => 
+      headers.map(field => {
+        let val = row[field];
+        if (val === null || val === undefined) val = '';
+        if (typeof val === 'object') val = JSON.stringify(val);
+        // Escape quotes
+        val = String(val).replace(/"/g, '""');
+        return `"${val}"`;
+      }).join(',')
+    )
+  ];
+  
+  const csvString = csvRows.join('\n');
+  const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', `${filename}-${new Date().toISOString().split('T')[0]}.csv`);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast(`Exported ${filename}.csv successfully`, 'success');
+}

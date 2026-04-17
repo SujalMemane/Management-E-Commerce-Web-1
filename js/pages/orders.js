@@ -3,7 +3,7 @@
  */
 import { auth } from '../firebase-config.js';
 import { requireAuth, populateUserUI, populateSidebarStats, fmt, showToast, openModal,
-         setLoading, skeletonRows, renderPagination } from '../ui-utils.js';
+         setLoading, skeletonRows, renderPagination, exportToCSV } from '../ui-utils.js';
 import { orderService, settingsService, productService } from '../forge-api.js';
 
 populateSidebarStats(productService);
@@ -149,6 +149,32 @@ let timer;
 searchInput?.addEventListener('input', (e) => {
   clearTimeout(timer);
   timer = setTimeout(() => { currentSearch = e.target.value; loadOrders(1); }, 400);
+});
+
+document.getElementById('btn-export-csv')?.addEventListener('click', async () => {
+  const btn = document.getElementById('btn-export-csv');
+  const ogText = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i> Exporting...';
+  try {
+    const res = await orderService.getAll({ status: currentStatus, search: currentSearch, page: 1, pageSize: 10000 });
+    if (!res.data || res.data.length === 0) {
+      showToast('No data to export', 'warning');
+    } else {
+      const data = res.data.map(o => ({
+        OrderNumber: o.orderNumber || o.id,
+        Customer: o.customerName || 'Unknown',
+        Email: o.customerEmail || '',
+        Status: o.status || 'unknown',
+        Total: o.total || 0,
+        Date: new Date(o.orderedAt?.seconds * 1000).toLocaleString()
+      }));
+      exportToCSV(data, 'OrdersList');
+    }
+  } catch (err) {
+    showToast('Failed to export CSV', 'error');
+  } finally {
+    btn.innerHTML = ogText;
+  }
 });
 
 loadStats();

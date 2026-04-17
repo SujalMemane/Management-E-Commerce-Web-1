@@ -115,11 +115,24 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <div class="hidden md:flex items-center gap-2 bg-gray-100 p-1 rounded-lg">
-                        <button class="px-3 py-1.5 text-xs font-medium bg-white shadow-sm rounded-md text-gray-900">7 Days</button>
-                        <button class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900">30 Days</button>
-                        <button class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900">Custom</button>
+                    <div class="hidden md:flex items-center gap-2 bg-gray-100 p-1 rounded-lg mr-2">
+                        <button id="filter-7" class="px-3 py-1.5 text-xs font-medium bg-white shadow-sm rounded-md text-gray-900 border border-transparent transition-colors">7 Days</button>
+                        <button id="filter-30" class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition-colors bg-transparent">30 Days</button>
+                        <button id="filter-custom" class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition-colors bg-transparent">Custom</button>
                     </div>
+                    <button class="relative p-2.5 hover:bg-gray-100 rounded-xl transition-colors">
+                        <i class="fa-regular fa-bell text-gray-500 text-lg"></i>
+                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                    </button>
+                    <div class="w-px h-8 bg-gray-200 mx-1 hidden sm:block"></div>
+                    <button class="flex items-center gap-2.5 pl-2 pr-3 py-1.5 hover:bg-gray-100 rounded-xl transition-colors">
+                        <div data-user-initials class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold text-xs">—</div>
+                        <div class="hidden sm:block text-left">
+                            <p data-user-name class="text-sm font-semibold text-gray-800 leading-tight">Loading...</p>
+                            <p data-user-role class="text-[11px] text-gray-400">—</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs hidden sm:block"></i>
+                    </button>
                 </div>
             </div>
         </header>
@@ -130,7 +143,7 @@
                     <p class="text-gray-500 text-sm mb-1">Conversion Rate</p>
                     <div class="flex items-end justify-between">
                         <h3 id="metric-conversion" class="text-2xl font-bold text-gray-900">3.48%</h3>
-                        <span class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>12%</span>
+                        <span id="trend-conversion" class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>12%</span>
                     </div>
                     <div class="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
                         <div id="bar-conversion" class="h-full bg-brand-500 rounded-full" style="width: 65%"></div>
@@ -140,7 +153,7 @@
                     <p class="text-gray-500 text-sm mb-1">Average Order Value</p>
                     <div class="flex items-end justify-between">
                         <h3 id="metric-aov" class="text-2xl font-bold text-gray-900">$128.50</h3>
-                        <span class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>8%</span>
+                        <span id="trend-aov" class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>8%</span>
                     </div>
                     <div class="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
                         <div id="bar-aov" class="h-full bg-blue-500 rounded-full" style="width: 45%"></div>
@@ -150,7 +163,7 @@
                     <p class="text-gray-500 text-sm mb-1">Bounce Rate</p>
                     <div class="flex items-end justify-between">
                         <h3 id="metric-bounce" class="text-2xl font-bold text-gray-900">42.1%</h3>
-                        <span class="text-red-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-down mr-1"></i>5%</span>
+                        <span id="trend-bounce" class="text-red-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-down mr-1"></i>5%</span>
                     </div>
                     <div class="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
                         <div id="bar-bounce" class="h-full bg-red-500 rounded-full" style="width: 42%"></div>
@@ -160,7 +173,7 @@
                     <p class="text-gray-500 text-sm mb-1">Sessions</p>
                     <div class="flex items-end justify-between">
                         <h3 id="metric-sessions" class="text-2xl font-bold text-gray-900">12,842</h3>
-                        <span class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>24%</span>
+                        <span id="trend-sessions" class="text-emerald-500 text-xs font-bold mb-1"><i class="fa-solid fa-caret-up mr-1"></i>24%</span>
                     </div>
                     <div class="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
                         <div id="bar-sessions" class="h-full bg-emerald-500 rounded-full" style="width: 78%"></div>
