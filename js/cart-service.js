@@ -105,15 +105,15 @@ export async function getAbandonedCarts() {
     twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
     
     const cartsRef = collection(db, 'carts');
-    const q = query(
-      cartsRef,
-      where('status', '==', 'active'),
-      where('lastInteractionAt', '<', Timestamp.fromDate(twentyFourHoursAgo)),
-      orderBy('lastInteractionAt', 'desc')
-    );
+    const snapshot = await getDocs(cartsRef);
     
-    const snapshot = await getDocs(q);
-    const carts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const carts = snapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() }))
+      .filter(cart => {
+        const lastInt = cart.lastInteractionAt?.toDate();
+        return cart.status === 'active' && lastInt && lastInt < twentyFourHoursAgo;
+      })
+      .sort((a, b) => (b.lastInteractionAt?.toDate() || 0) - (a.lastInteractionAt?.toDate() || 0));
     
     return { success: true, data: carts };
   } catch (error) {
@@ -128,16 +128,15 @@ export async function getAbandonedCarts() {
 export async function getAllCarts({ status = '' } = {}) {
   try {
     const cartsRef = collection(db, 'carts');
-    let q;
+    const snapshot = await getDocs(cartsRef);
+    
+    let carts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     
     if (status) {
-      q = query(cartsRef, where('status', '==', status), orderBy('lastInteractionAt', 'desc'));
-    } else {
-      q = query(cartsRef, orderBy('lastInteractionAt', 'desc'));
+      carts = carts.filter(cart => cart.status === status);
     }
     
-    const snapshot = await getDocs(q);
-    const carts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    carts.sort((a, b) => (b.lastInteractionAt?.toDate() || 0) - (a.lastInteractionAt?.toDate() || 0));
     
     return { success: true, data: carts };
   } catch (error) {
