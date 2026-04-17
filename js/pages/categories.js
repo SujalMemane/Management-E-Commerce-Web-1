@@ -2,16 +2,21 @@
  * ForgeAdmin — Categories Page
  */
 import { auth } from '../firebase-config.js';
-import { requireAuth, populateUserUI, fmt, showToast, openModal,
+import { requireAuth, populateUserUI, populateSidebarStats, fmt, showToast, openModal,
          confirmDelete, setLoading, skeletonCards } from '../ui-utils.js';
-import { categoryService } from '../forge-api.js';
+import { categoryService, settingsService, productService } from '../forge-api.js';
+
+populateSidebarStats(productService);
 import { signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const esc = fmt.escapeHtml;
 const escAttr = fmt.escapeAttr;
 
 const user = await requireAuth(auth, '../index.html');
-populateUserUI(user);
+try {
+  const s = await settingsService.get(user.uid);
+  populateUserUI(user, { name: s.profile?.name, email: s.profile?.email, role: s.role });
+} catch (e) { populateUserUI(user); }
 document.getElementById('logoutBtn')?.addEventListener('click', async () => {
   await signOut(auth); window.location.href = '../index.html';
 });

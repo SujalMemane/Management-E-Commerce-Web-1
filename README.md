@@ -1,217 +1,68 @@
-# 🛠️ ForgeAdmin – Frontend (Admin Dashboard UI Only)
-
-## 📌 Overview
-
-**ForgeAdmin** is a **frontend-only e-commerce management dashboard** built for the **BackForge Hackathon**.
-
-It provides a complete **admin panel UI** for managing an online store, while leaving all backend logic such as APIs, authentication, and database integration to be implemented separately.
-
-This dashboard simulates a real-world store management system with modules like:
-
-* Products
-* Orders
-* Inventory
-* Analytics
-* Customers
-* Promotions
-* Staff Management
-
-📄 Reference Documentation: 
-
----
-
-## 🚀 Key Features
-
-* Modern admin dashboard UI
-* Multi-page architecture
-* Fully responsive design
-* Reusable components
-* Backend-ready frontend structure
-
----
-
-## 🏗️ System Architecture
-
-ForgeAdmin follows a **static multi-page dashboard architecture**:
-
-* Each module is built as a separate HTML page
-* Shared CSS and Tailwind styling
-* No backend or database integration
-* Static placeholder data
-
-### 🔹 Architecture Layers
-
-**1. UI Layer**
-
-* HTML
-* CSS + Tailwind CSS
-* Font Awesome icons
-
-**2. Logic Layer**
-
-* Minimal JavaScript
-* No API calls
-* No real functionality
-
-**3. Data Layer**
-
-* No database
-* Static hardcoded data
-
----
-
-## 🔐 Authentication Module
-
-* Login page
-* Signup page
-* Credential input fields
-
-⚠️ *Note: No real authentication or session management is implemented.*
-
----
-
-## 📊 Dashboard Module
-
-* KPI cards (Sales, Revenue, Orders, Customers)
-* Overview analytics
-* Sidebar navigation
-* Recent activity panel
-
----
-
-## 📈 Analytics Module
-
-* Traffic overview
-* Device usage stats
-* Sales trends
-* Engagement metrics
-
----
-
-## 📦 Products Module
-
-* Product listing UI
-* SKU & stock display
-* Search and filter interface
-
----
-
-## 🗂️ Categories Module
-
-* Category listing
-* Product grouping UI
-* Status indicators
-
----
-
-## 📦 Inventory Module
-
-* Stock tracking UI
-* Low-stock alerts
-* Quantity indicators
-
----
-
-## 🧾 Orders Module
-
-* Order listing
-* Status tracking
-* Customer order details
-
----
-
-## 👥 Customers Module
-
-* Customer profiles
-* Purchase history
-* Spending insights
-
----
-
-## ⭐ Reviews Module
-
-* Customer feedback UI
-* Ratings display
-* Sentiment overview
-
----
-
-## 🎯 Promotions Module
-
-* Coupon management UI
-* Discount tracking
-* Expiry indicators
-
----
-
-## 👨‍💼 Staff Module
-
-* Staff listing
-* Role assignment UI
-* Permission overview
-
----
-
-## ⚙️ Settings Module
-
-* Profile settings
-* Email preferences
-* Notification toggles
-
----
-
-## 🎨 UI/UX Design
-
-### Design Principles
-
-* Clean & professional layout
-* Card-based UI
-* Minimal navigation
-* Dashboard-focused experience
-
-### Styling
-
-* Tailwind CSS utilities
-* Custom CSS
-* Rounded cards
-* Soft shadows
-
-### Interactions
-
-* Hover effects
-* Smooth transitions
-* Sidebar animations
-
----
-
-## 📐 Layout Structure
-
-* Multi-page dashboard
-* Shared sidebar & header
-* Responsive grid system
-* Consistent spacing & typography
-
----
-
-## 🧰 Tech Stack
-
-* HTML5
-* CSS3
-* Tailwind CSS
-* Font Awesome 6.4.0
-* Google Fonts (Inter)
-
----
-
-## 📁 Project Structure
-
-```
+# ForgeAdmin - Firebase-Powered E-Commerce Admin Dashboard
+
+ForgeAdmin is a multi-page e-commerce admin dashboard with real Firebase integration.
+It includes authentication, Firestore-backed CRUD modules, dashboard stats, and seed data for hackathon demos.
+
+## Current Status
+
+- Firebase Auth is integrated (email/password flow)
+- Firestore is integrated as the primary database
+- Major modules are connected to real data
+- UI user profile (name/email/initials/role) is dynamic from logged-in user data
+- Hackathon mode is enabled for faster demo setup
+
+## Features
+
+- Auth: signup, login, logout, protected pages
+- Dashboard: revenue/orders/customers/products cards from Firestore
+- Products: list, search, create, edit, delete
+- Categories: list, create, edit, delete (with product count guard on delete)
+- Inventory: stock monitoring and stock updates
+- Orders: list, search, status transitions, order details modal
+- Customers: list/search/create/edit/soft-delete
+- Reviews: moderation (approve/reject/delete)
+- Promotions: coupon CRUD with validation
+- Staff: list/create/edit/delete
+- Settings: profile + notification preferences persistence
+- Seed utility page to populate demo data quickly
+
+## Tech Stack
+
+- HTML5, CSS3, Tailwind CSS
+- Vanilla JavaScript (ES modules)
+- Firebase Auth
+- Cloud Firestore
+- Font Awesome + Inter font
+
+## Project Structure
+
+```txt
 /
-├── index.html            # Login Page
-├── style.css             # Global Styles
-├── components/
-│   ├── sidebar.html
-│   └── header.html
+├── index.html
+├── seed.html
+├── firestore.rules
+├── style.css
+├── js/
+│   ├── firebase-config.js
+│   ├── forge-api.js
+│   ├── ui-utils.js
+│   ├── seed.js
+│   ├── auth.js
+│   ├── auth-ui.js
+│   └── pages/
+│       ├── dashboard.js
+│       ├── analytics.js
+│       ├── products.js
+│       ├── categories.js
+│       ├── inventory.js
+│       ├── orders.js
+│       ├── customers.js
+│       ├── reviews.js
+│       ├── promotions.js
+│       ├── staff.js
+│       ├── settings.js
+│       ├── signup.js
+│       └── login.js
 └── pages/
     ├── signup.html
     ├── dashboard.html
@@ -227,80 +78,130 @@ ForgeAdmin follows a **static multi-page dashboard architecture**:
     └── settings.html
 ```
 
----
+## Firebase Setup
 
-## 📱 Responsiveness
+### 1) Create Firebase Project
 
-Optimized for:
+1. Open Firebase Console
+2. Create/select project
+3. Add a web app
+4. Copy Firebase config values
 
-* Desktop 💻
-* Tablet 📱
-* Mobile 📲
+### 2) Configure App
 
-Using:
+Update `js/firebase-config.js` with your Firebase credentials.
 
-* Flexbox
-* CSS Grid
-* Tailwind responsive utilities
+### 3) Enable Authentication
 
----
+- Go to Authentication -> Sign-in method
+- Enable Email/Password provider
 
-## ⚠️ Limitations
+### 4) Create Firestore Database
 
-* No backend integration
-* No database
-* No authentication system
-* No API calls
-* No real data handling
-* No dynamic analytics
+- Go to Firestore Database
+- Create database (recommended: production mode + proper rules)
 
----
+### 5) Deploy Firestore Rules
 
-## 🔮 Future Enhancements
+This repo includes `firestore.rules`.
+Deploy rules using Firebase CLI:
 
-* Backend API integration
-* JWT/OAuth authentication
-* Real-time analytics
-* Database connectivity
-* Advanced filtering & search
-* Role-based access control
-* Notifications system
+```bash
+firebase deploy --only firestore:rules
+```
 
----
+## Run Locally
 
-## 🎯 Purpose
+Because this uses ES modules, run on a local server (not file://).
 
-ForgeAdmin is designed to:
+Example (if you have Python):
 
-* Provide a ready-made admin UI
-* Accelerate hackathon development
-* Allow focus on backend implementation
+```bash
+python -m http.server 5500
+```
 
----
+Then open:
 
-## 🏁 Conclusion
+- `http://localhost:5500/index.html`
 
-ForgeAdmin offers a **complete admin dashboard UI foundation** for building a full-stack e-commerce management system.
+## Demo Data (Seed)
 
-It helps developers:
+1. Login first
+2. Open `seed.html`
+3. Click **Seed Database**
+4. Go to dashboard and test all modules with sample data
 
-* Skip UI development time
-* Focus on backend logic
-* Build scalable admin systems
+The seed creates:
 
----
+- categories, products, customers, orders
+- reviews, promotions, staff
 
-## 🤝 Contribution
+## Validation and Safety Improvements Included
 
-This project is part of the **BackForge Hackathon** ecosystem.
-Feel free to fork, extend, and integrate backend solutions.
+- Escaping helpers for HTML/attribute injection prevention
+- Input validation for key numeric fields:
+  - product price/stock
+  - promotion discount values
+  - inventory stock updates
+- Basic required-field validation for customer/staff records
+- Double-submit protection through button loading state
 
----
+## Hackathon Mode Notes
 
-## 📜 License
+Current implementation is optimized for demo speed:
 
-Open for educational and hackathon use.
+- New signup users are assigned admin role for quick testing
+- Firestore rules are currently relaxed for authenticated users
 
----
+Before production, tighten:
 
-💡 *Manage smarter. Build faster. Forge better.*
+- role assignment policy
+- Firestore access rules
+- authorization checks per module/action
+
+## Troubleshooting
+
+### Registration failed
+
+Likely causes:
+
+- Email/password auth not enabled
+- Firestore rules blocking `settings/{uid}` write
+- network/auth domain mismatch
+
+### Dashboard stats not loading
+
+Likely causes:
+
+- rules not deployed
+- empty `orders`/`products`/`customers` collections
+- not authenticated session
+
+### Name not updating after login
+
+User name/email/role come from:
+
+- Firebase user profile
+- Firestore `settings/{uid}.profile` and `settings/{uid}.role`
+
+If missing, update settings page or check signup flow writes.
+
+## Security and Production Checklist
+
+- Replace hackathon rules with least-privilege rules
+- Enforce strict role-based checks in rules and app logic
+- Disable auto-admin on signup
+- Add audit logging for critical operations
+- Add pagination/index strategy for scale
+- Add server-side validation layer (Cloud Functions/API) for sensitive writes
+
+## Related Docs
+
+- `FIREBASE_AUTH_INTEGRATION.md`
+- `TESTING_GUIDE.md`
+- `START_SERVER.md`
+- `QUICK_FIX.md`
+
+## License
+
+MIT (see `LICENSE`)

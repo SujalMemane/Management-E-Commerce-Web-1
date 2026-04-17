@@ -4,14 +4,22 @@
  */
 import { auth } from '../firebase-config.js';
 import { requireAuth, populateUserUI, fmt, showToast } from '../ui-utils.js';
-import { dashboardService, orderService, inventoryService, reviewService, productService } from '../forge-api.js';
+import { dashboardService, orderService, inventoryService, reviewService, productService, settingsService } from '../forge-api.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const esc = fmt.escapeHtml;
 
 // ── Auth Guard ────────────────────────────────
 const user = await requireAuth(auth, '../index.html');
-populateUserUI(user);
+
+// Load user profile from Firestore and update UI
+try {
+  const settings = await settingsService.get(user.uid);
+  const profile = settings.profile || {};
+  populateUserUI(user, { name: profile.name || user.displayName, email: profile.email || user.email, role: settings.role });
+} catch (e) {
+  populateUserUI(user);
+}
 
 // ── Logout ────────────────────────────────────
 document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
@@ -155,6 +163,10 @@ async function loadDashboard() {
     setStatCard('products',  fmt.number(stats.products.total),     stats.products.change,  stats.products.trend);
 
     console.log('Stats loaded successfully');
+    
+    // Update sidebar product count badge
+    const sidebarCount = document.getElementById('sidebar-product-count');
+    if (sidebarCount) sidebarCount.textContent = stats.products.total;
   } catch (err) {
     console.error('[Dashboard] Failed to load stats:', err);
     showToast('Could not load dashboard stats', 'error');
@@ -245,4 +257,3 @@ async function updateSidebarBadges() {
 }
 
 updateSidebarBadges();
-
