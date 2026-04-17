@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firestore Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #ea580c;
+        }
+        .data-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Firestore Integration Test</h1>
+    
+    <div id="status" class="status info">Initializing...</div>
+    
+    <div id="user-info"></div>
+
+    <div class="section">
+        <h2>1. Authentication</h2>
+        <p>First, you need to be logged in to test Firestore.</p>
+        <button onclick="goToLogin()">Go to Login Page</button>
+        <button onclick="checkAuth()">Check Auth Status</button>
+    </div>
+
+    <div class="section">
+        <h2>2. User Profile Operations</h2>
+        <button onclick="testGetProfile()">Get My Profile</button>
+        <button onclick="testUpdateProfile()">Update Profile</button>
+        <button onclick="testGetAllUsers()">Get All Users</button>
+        <div id="profile-data" class="data-display" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h2>3. Activity Logging</h2>
+        <button onclick="testLogActivity()">Log Test Activity</button>
+        <button onclick="testGetActivities()">Get My Activities</button>
+        <div id="activity-data" class="data-display" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h2>4. Preferences</h2>
+        <button onclick="testUpdatePreferences()">Update Preferences</button>
+        <button onclick="testGetPreferences()">Get Preferences</button>
+        <div id="preferences-data" class="data-display" style="display:none;"></div>
+    </div>
+
+    <script type="module">
+        import { getCurrentUser, onAuthChange } from './js/auth.js';
+        import { 
+            getUserProfile, 
+            updateUserProfile,
+            getAllUsers,
+            logUserActivity,
+            getUserActivityHistory,
+            updateUserPreferences,
+            getUserPreferences,
+            formatDate
+        } from './js/firestore-db.js';
+
+        const statusDiv = document.getElementById('status');
+        const userInfoDiv = document.getElementById('user-info');
+        const profileDataDiv = document.getElementById('profile-data');
+        const activityDataDiv = document.getElementById('activity-data');
+        const preferencesDataDiv = document.getElementById('preferences-data');
+
+        let currentUser = null;
+
+        // Make functions global for onclick handlers
+        window.goToLogin = function() {
+            window.location.href = 'index.html';
+        };
+
+        window.checkAuth = function() {
+            currentUser = getCurrentUser();
+            if (currentUser) {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ Authenticated as: ' + currentUser.email;
+                userInfoDiv.innerHTML = `
+                    <div class="status info">
+                        <strong>Current User:</strong><br>
+                        Email: ${currentUser.email}<br>
+                        UID: ${currentUser.uid}<br>
+                        Display Name: ${currentUser.displayName || 'Not set'}
+                    </div>
+                `;
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Not authenticated. Please login first.';
+                userInfoDiv.innerHTML = '';
+            }
+        };
+
+        window.testGetProfile = async function() {
+            if (!currentUser) {
+                alert('Please login first!');
+                return;
+            }
+
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Fetching profile from Firestore...';
+
+            const result = await getUserProfile(currentUser.uid);
+
+            if (result.success) {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ Profile fetched successfully!';
+                profileDataDiv.style.display = 'block';
+                profileDataDiv.textContent = JSON.stringify(result.data, null, 2);
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Error: ' + result.error;
+                profileDataDiv.style.display = 'none';
+            }
+        };
+
+        window.testUpdateProfile = async function() {
+            if (!currentUser) {
+                alert('Please login first!');
+                return;
+            }
+
+            const newName = prompt('Enter new display name:', currentUser.displayName || '');
+            if (!newName) return;
+
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Updating profile...';
+
+            const result = await updateUserProfile(currentUser.uid, {
+                displayName: newName
+            });
+
+            if (result.success) {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ Profile updated successfully!';
+                // Refresh profile display
+                testGetProfile();
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Error: ' + result.error;
+            }
+        };
+
+        window.testGetAllUsers = async function() {
+            if (!currentUser) {
+                alert('Please login first!');
+                return;
+            }
+
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Fetching all users...';
+
+            const result = await getAllUsers();
+
+            if (result.success) {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = `✅ Found ${result.data.length} users`;
+                profileDataDiv.style.display = 'block';
+                profileDataDiv.textContent = JSON.stringify(result.data, null, 2);
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Error: ' + result.error;
+            }
+        };
+
+        window.testLogActivity = async function() {
+            if (!currentUser) {
+                alert('Please login first!');
+                return;
+            }
+
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Logging activity...';
+
+            const result = await logUserActivity(currentUser.uid, {
+                action: 'test_action',
+                description: 'Testing activity logging from test page',
+                metadata: {
+                    page: 'test-firestore.html',
+                    timestamp: new Date().toISOString()
+                }
+            });
+
+            if (result.success) {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ Activity logged successfully!';
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Error: ' + result.error;
+            }
+        };
+
+        window.testGetActivities = async function() {
+            if (!currentUser) {
+                alert('Please login first!');
+                return;
+            }
+
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Fetching activities...';
+
+            const result = await getUserActivityHistory(currentUser.uid, 10);
+
+            if (result.success) {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = `✅ Found ${result.data.length} activities`;
+                activityDataDiv.style.display = 'block';
+                activityDataDiv.textContent = JSON.stringify(result.data, null, 2);
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Error: ' + result.error;
+            }
+        };
+
+        window.testUpdatePreferences = async function() {
+            if (!currentUser) {
+                alert('Please login first!');
+                return;
+            }
+
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Updating preferences...';
+
+            const result = await updateUserPreferences(currentUser.uid, {
+                emailNotifications: true,
+                lowStockAlerts: false,
+                marketingUpdates: true
+            });
+
+            if (result.success) {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ Preferences updated successfully!';
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Error: ' + result.error;
+            }
+        };
+
+        window.testGetPreferences = async function() {
+            if (!currentUser) {
+                alert('Please login first!');
+                return;
+            }
+
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Fetching preferences...';
+
+            const result = await getUserPreferences(currentUser.uid);
+
+            if (result.success) {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ Preferences fetched successfully!';
+                preferencesDataDiv.style.display = 'block';
+                preferencesDataDiv.textContent = JSON.stringify(result.data, null, 2);
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Error: ' + result.error;
+            }
+        };
+
+        // Listen to auth state changes
+        onAuthChange((user) => {
+            currentUser = user;
+            checkAuth();
+        });
+
+        // Initial check
+        statusDiv.className = 'status success';
+        statusDiv.textContent = '✅ Firestore initialized successfully!';
+        checkAuth();
+    </script>
+</body>
+</html>

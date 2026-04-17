@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firestore Simple Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .console {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #ea580c;
+        }
+        .error { color: #ff4444; }
+        .success { color: #00ff00; }
+        .info { color: #4444ff; }
+    </style>
+</head>
+<body>
+    <h1>🔥 Firestore Simple Test</h1>
+    <p>This page will test if Firestore is properly configured.</p>
+    
+    <button onclick="testFirestoreWrite()">Test Write to Firestore</button>
+    <button onclick="clearConsole()">Clear Console</button>
+    
+    <h3>Console Output:</h3>
+    <div id="console" class="console">Waiting for test...</div>
+
+    <script type="module">
+        import { db } from './js/firebase-config.js';
+        import { 
+            collection,
+            doc,
+            setDoc,
+            getDoc,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getCurrentUser } from './js/auth.js';
+
+        const consoleDiv = document.getElementById('console');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : 'info';
+            consoleDiv.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            console.log(message);
+        }
+
+        window.clearConsole = function() {
+            consoleDiv.innerHTML = 'Console cleared.\n';
+        };
+
+        window.testFirestoreWrite = async function() {
+            try {
+                log('🔍 Starting Firestore test...', 'info');
+                
+                // Check if user is logged in
+                const user = getCurrentUser();
+                if (!user) {
+                    log('❌ ERROR: No user logged in!', 'error');
+                    log('Please login first at index.html', 'error');
+                    return;
+                }
+                
+                log(`✅ User logged in: ${user.email}`, 'success');
+                log(`User UID: ${user.uid}`, 'info');
+                
+                // Test 1: Check if db is initialized
+                log('📝 Checking Firestore initialization...', 'info');
+                if (!db) {
+                    log('❌ ERROR: Firestore (db) is not initialized!', 'error');
+                    return;
+                }
+                log('✅ Firestore is initialized', 'success');
+                
+                // Test 2: Try to write a test document
+                log('📝 Attempting to write test document...', 'info');
+                const testRef = doc(db, 'test', 'test-doc');
+                
+                await setDoc(testRef, {
+                    message: 'Hello Firestore!',
+                    timestamp: serverTimestamp(),
+                    userId: user.uid
+                });
+                
+                log('✅ Test document written successfully!', 'success');
+                
+                // Test 3: Try to read it back
+                log('📖 Reading test document back...', 'info');
+                const docSnap = await getDoc(testRef);
+                
+                if (docSnap.exists()) {
+                    log('✅ Test document read successfully!', 'success');
+                    log(`Data: ${JSON.stringify(docSnap.data())}`, 'info');
+                } else {
+                    log('❌ ERROR: Could not read test document!', 'error');
+                }
+                
+                // Test 4: Try to write user profile
+                log('📝 Attempting to write user profile...', 'info');
+                const userRef = doc(db, 'users', user.uid);
+                
+                const userProfile = {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName || 'Test User',
+                    role: 'admin',
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp(),
+                    isActive: true,
+                    preferences: {
+                        emailNotifications: true,
+                        lowStockAlerts: true,
+                        marketingUpdates: false
+                    }
+                };
+                
+                await setDoc(userRef, userProfile);
+                
+                log('✅ User profile written successfully!', 'success');
+                log('🎉 ALL TESTS PASSED!', 'success');
+                log('', 'info');
+                log('Now check Firebase Console → Firestore Database', 'info');
+                log('You should see:', 'info');
+                log('  - test/test-doc', 'info');
+                log(`  - users/${user.uid}`, 'info');
+                
+            } catch (error) {
+                log(`❌ ERROR: ${error.message}`, 'error');
+                log(`Error code: ${error.code}`, 'error');
+                log(`Full error: ${JSON.stringify(error)}`, 'error');
+                
+                if (error.code === 'permission-denied') {
+                    log('', 'error');
+                    log('⚠️  PERMISSION DENIED ERROR', 'error');
+                    log('This means Firestore security rules are blocking the write.', 'error');
+                    log('', 'error');
+                    log('SOLUTION:', 'info');
+                    log('1. Go to Firebase Console', 'info');
+                    log('2. Click Firestore Database → Rules', 'info');
+                    log('3. Replace rules with the ones in FIRESTORE_SETUP.md', 'info');
+                    log('4. Click Publish', 'info');
+                }
+                
+                if (error.code === 'unavailable') {
+                    log('', 'error');
+                    log('⚠️  FIRESTORE NOT ENABLED', 'error');
+                    log('Firestore database is not enabled in your Firebase project.', 'error');
+                    log('', 'error');
+                    log('SOLUTION:', 'info');
+                    log('1. Go to Firebase Console', 'info');
+                    log('2. Click Firestore Database', 'info');
+                    log('3. Click "Create Database"', 'info');
+                    log('4. Follow the setup wizard', 'info');
+                }
+            }
+        };
+
+        // Auto-run on page load
+        log('Page loaded. Click "Test Write to Firestore" button to start.', 'info');
+        log('Make sure you are logged in first!', 'info');
+    </script>
+</body>
+</html>

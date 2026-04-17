@@ -11,7 +11,8 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
     updateProfile
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { createUserProfile, getUserProfile } from './firestore-db.js';
 
 // ==================== UTILITY FUNCTIONS ====================
 
@@ -123,15 +124,40 @@ export async function signUpUser(email, password, displayName = '') {
             throw new Error('Password must be at least 6 characters long.');
         }
         
+        console.log('Creating user account...');
+        
         // Create user account
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         
+        console.log('User account created:', userCredential.user.uid);
+        
         // Update display name if provided
         if (displayName) {
+            console.log('Updating display name...');
             await updateProfile(userCredential.user, {
                 displayName: displayName
             });
+            console.log('Display name updated');
         }
+        
+        // Create user profile in Firestore
+        console.log('Creating Firestore profile...');
+        const profileData = {
+            email: email,
+            displayName: displayName,
+            role: 'admin' // Default role for new users
+        };
+        
+        const firestoreResult = await createUserProfile(userCredential.user.uid, profileData);
+        
+        if (firestoreResult.success) {
+            console.log('✅ Firestore profile created successfully!');
+        } else {
+            console.error('❌ Firestore profile creation failed:', firestoreResult.error);
+            // Don't fail the signup if Firestore fails, just log it
+        }
+        
+        console.log('User account and profile created successfully');
         
         return { success: true, user: userCredential.user };
     } catch (error) {
@@ -206,6 +232,21 @@ export async function signInWithGoogle() {
     try {
         const provider = new GoogleAuthProvider();
         const userCredential = await signInWithPopup(auth, provider);
+        
+        // Check if user profile exists in Firestore, if not create one
+        const profileResult = await getUserProfile(userCredential.user.uid);
+        
+        if (!profileResult.success) {
+            // Create profile for Google sign-in user
+            const profileData = {
+                email: userCredential.user.email,
+                displayName: userCredential.user.displayName,
+                photoURL: userCredential.user.photoURL,
+                role: 'admin'
+            };
+            
+            await createUserProfile(userCredential.user.uid, profileData);
+        }
         
         return { success: true, user: userCredential.user };
     } catch (error) {

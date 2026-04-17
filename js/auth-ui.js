@@ -235,12 +235,17 @@ export function initSignupForm() {
         if (result.success) {
             showSuccess('Account created successfully! Redirecting...');
             
+            // Log to console for debugging
+            console.log('✅ Signup successful');
+            console.log('User:', result.user);
+            
             // Redirect to dashboard
             setTimeout(() => {
                 window.location.href = 'dashboard.html';
             }, 1000);
         } else {
             showError(result.error);
+            console.error('❌ Signup failed:', result.error);
         }
     });
 }

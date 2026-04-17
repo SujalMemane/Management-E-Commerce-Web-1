@@ -12,7 +12,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, connectAuthEmulator } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, connectFirestoreEmulator }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCiasPOawO_890pGm-qtyx7GyzAVhnvtyI",
@@ -30,4 +30,6 @@ export const db   = getFirestore(app);
 
 // Optional: connect to Auth Emulator for local development
 // connectAuthEmulator(auth, "http://localhost:9099");
+// connectFirestoreEmulator(db, 'localhost', 8080);
+
 export default app;
